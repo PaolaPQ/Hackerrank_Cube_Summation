@@ -22,8 +22,11 @@ class HomeController extends Controller {
      *
      * @return void
      */
+    private $cube_temp;
+    
     public function __construct() {
         //$this->middleware('guest');
+        $this->cube_temp = array();
     }
 
     /**
@@ -51,37 +54,17 @@ class HomeController extends Controller {
                 
                 for ($test = 1; $test <= $test_tam; $test++) {
                     $cube = explode(" ", trim($split[$test_start]));
+                    $this->cube_temp = array();
+                    
                     $cube_tam = $cube[0];
                     $cube_op = $cube[1];
-                    $cube_temp = array();
                     $cube_opts = "";
 
                     $test_end = $test_start + $cube_op + 1;
 
-                    for ($position = $test_start; $position < $test_end; $position++) {
+                    for ($position = $test_start + 1; $position < $test_end; $position++) {
                         $sql = explode(" ", trim($split[$position]));
-                        $query_type = $sql[0];
-
-                        switch ($query_type) {
-                            case "UPDATE":
-                                $point = (int) $sql[1] . $sql[2] . $sql[3];
-                                $cube_temp[$point] = (int) $sql[4];
-                                
-                                break;
-                            case "QUERY":
-                                $point_1 = (int) $sql[1] . $sql[2] . $sql[3];
-                                $point_2 = (int) $sql[4] . $sql[5] . $sql[6];
-                                $summary = 0;
-                                
-                                foreach ($cube_temp as $point => $value) {
-                                    if($point >= $point_1 && $point <= $point_2){
-                                        $summary +=  $value;
-                                    }
-                                }
-                                
-                                $cube_opts .= $summary . "</br>";
-                                break;
-                        }
+                        $cube_opts .= $this->processOperation($sql);
                         
                     }
                     
@@ -92,7 +75,34 @@ class HomeController extends Controller {
         }
         
         return response()->json($result);
-        //return response()->json(['success' => 'success message']);
+    }
+    
+    private function processOperation($sql) {
+        $summary = "";
+        $type = $sql[0];
+        
+        switch ($type) {
+            case "UPDATE":
+                $point = (int) $sql[1] . $sql[2] . $sql[3];
+                $this->cube_temp[$point] = (int) $sql[4];
+
+                break;
+            case "QUERY":
+                $point_1 = (int) $sql[1] . $sql[2] . $sql[3];
+                $point_2 = (int) $sql[4] . $sql[5] . $sql[6];
+                $summary = 0;
+
+                foreach ($this->cube_temp as $point => $value) {
+                    if($point >= $point_1 && $point <= $point_2){
+                        $summary +=  $value;
+                    }
+                }
+
+                $summary .= "</br>";
+                break;
+        }
+        
+        return $summary;
     }
     
 }
