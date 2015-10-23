@@ -1,45 +1,42 @@
-<!DOCTYPE html>
 <html>
     <head>
-        <title>Laravel</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
+        <title>Suma de Cubos</title>
+        <meta name="csrf-token" content="{!! csrf_token() !!}" />
+        
+        {!! HTML::style('plugins/bootstrap/css/bootstrap.css') !!}
     </head>
     <body>
         <div class="container">
-            <div class="content">
-                <div class="title">Laravel 5</div>
+            <div class="content page-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form id="form-data-charge">
+                            <div class="form-group">
+                                <label>Datos de Prueba</label>
+                                <textarea name="indata" id="indata" class="form-control" rows="10"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block" id="btn-calculate-summary">Calcular</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row" id="cube-summary"></div>
+                    </div>
+                </div>
             </div>
         </div>
+        
+        {!! HTML::script('plugins/jquery/jquery-2.1.4.js') !!}
+        {!! HTML::script('plugins/jquery/jquery.validate.min.js') !!}
+        
+        {!! HTML::script('js/app.js') !!}
+        
+        <script>
+            $(document).ready(function () {
+                app.init();
+            });
+        </script>
+        
     </body>
 </html>
