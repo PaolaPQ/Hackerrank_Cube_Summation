@@ -91,7 +91,7 @@ class HomeController extends Controller {
                 $point_1 = (int) $sql[1] . $sql[2] . $sql[3];
                 $point_2 = (int) $sql[4] . $sql[5] . $sql[6];
                 $summary = 0;
-
+                
                 foreach ($this->cube_temp as $point => $value) {
                     if($point >= $point_1 && $point <= $point_2){
                         $summary +=  $value;
