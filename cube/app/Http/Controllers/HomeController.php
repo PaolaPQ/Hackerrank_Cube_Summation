@@ -85,12 +85,12 @@ class HomeController extends Controller {
 
                 break;
             case "QUERY":
-                $point_1 = (int) $sql[1] . $sql[2] . $sql[3];
-                $point_2 = (int) $sql[4] . $sql[5] . $sql[6];
+                $point_start = (int) $sql[1] . $sql[2] . $sql[3];
+                $point_end = (int) $sql[4] . $sql[5] . $sql[6];
                 $summary = 0;
                 
                 foreach ($this->cube_temp as $point => $value) {
-                    if($point >= $point_1 && $point <= $point_2){
+                    if($point >= $point_start && $point <= $point_end){
                         $summary +=  $value;
                     }
                 }
