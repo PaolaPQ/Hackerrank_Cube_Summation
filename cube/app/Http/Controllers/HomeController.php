@@ -44,11 +44,8 @@ class HomeController extends Controller {
         if (Request::isMethod('post') && Request::ajax()) {
             if (Input::has('indata')) {
                 $result["status"] = true;
-                $data = Input::get('indata');
-                $data = nl2br($data);
                 
-                $split = explode('<br />', $data);
-                
+                $split = explode('<br />', nl2br(Input::get('indata')));
                 $test_tam = trim($split[0]);
                 $test_start = 1;
                 
