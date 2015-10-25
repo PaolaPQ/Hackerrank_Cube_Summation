@@ -33,7 +33,7 @@ $(document).on("ready", function () {
             $('#cube-summary').html('');
             $.ajax({
                 type: "POST",
-                url: "/cube/summary",
+                url: "cube/summary",
                 encoding:"UTF-8",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
